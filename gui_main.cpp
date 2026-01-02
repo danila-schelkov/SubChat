@@ -113,9 +113,7 @@ void ApplyDPI(float dpi_scale) {
     ImGui::GetStyle() = default_style;
     ImGuiStyle &style = ImGui::GetStyle();
     style.ScaleAllSizes(dpi_scale);
-
 }
-
 
 void ShowDockSpace() {
     ImGuiViewport *vp = ImGui::GetMainViewport();
@@ -175,10 +173,16 @@ int main(int, char **) {
     glfwSetErrorCallback(glfw_error_callback);
     if (!glfwInit())
         return 1;
-    const char *glsl_version = "#version 130";
+    const char* glsl_version = "#version 330 core";
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
-    GLFWwindow *window = glfwCreateWindow(1280, 720, "SubChat Config Generator", nullptr, nullptr);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    // https://stackoverflow.com/a/68879218/14915825
+#ifdef __APPLE__
+    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+#endif
+
+    GLFWwindow* window = glfwCreateWindow(1280, 720, "SubChat Config Generator", nullptr, nullptr);
     if (window == nullptr)
         return 1;
     glfwMakeContextCurrent(window);
